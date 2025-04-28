@@ -1,0 +1,13 @@
+en
+config t
+int  g0/0/0
+no shutdown
+repeat
+do sh ip br
+
+ip dhcp excluded-address ip1 ip2
+ip dhcp pool poolname
+default-router ip mask
+dns-server add
+exit 
+repeat
