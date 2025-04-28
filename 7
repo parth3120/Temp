@@ -1,48 +1,56 @@
- Method: 
-Vary 
-o Number of mul paths: 1, 5, 10, 50, 100, 500 
-o Number of branches (channels): 1, 2, 3, 5 
-Other fixed parameters: 
-Graphs 
-1. Channel vs Time (SC & MRC) 
-o Shows fading amplitude over me for: 
- SC (Selec on Combining) 
- MRC (Maximal Ra o Combining) 
-o Nature: 
-Fast random varia ons around an average value. More branches (MRC) smooth out 
-deep fades. 
-2. Probability vs Threshold (M=5) 
-o Shows the probability that signal falls below a threshold. 
-o Nature: 
- SC: Higher probability of being below threshold. 
- MRC: Lower probability → be er performance. 
-3. LCR vs Threshold (Level Crossing Rate) 
-o How o en the signal crosses a threshold. 
-o Nature: 
- SC: Higher LCR → more rapid fading. 
- MRC: Lower LCR → more stable signal. 
-4. ADF vs Threshold (Average Fade Dura on) 
-o How long the signal stays below a threshold during fades. 
-o Nature: 
- SC: Shorter ADF. 
- MRC: Longer ADF at higher thresholds because deep fades are rarer but last 
-longer. 
-Which Input Parameters Affect the Graphs and Why 
-Input Parameter 
-No. of Mul paths 
-No. of Branches 
-(Channels) 
-Sampling Time 
-Reason 
-More mul paths → more construc ve and destruc ve interference → 
-faster, deeper fading. 
-More branches → be er diversity → less probability of deep fades 
-(improves MRC). 
-Smaller sampling me → captures faster varia ons accurately. 
-Carrier Frequency (fc) Higher fc → faster Doppler shi s → quicker channel varia ons. 
-Velocity (Speed) 
-Threshold (dB) 
-Avg SNR (dB) 
-Higher speed → faster fading → more frequent level crossings (higher LCR). 
-Changing threshold changes how o en signal falls below it. 
-Higher SNR → generally lower probability of falling below thresholds.
+**Methodology Overview**  
+We conduct a parametric study of Selection Combining (SC) and Maximal-Ratio Combining (MRC) under Rayleigh–fading conditions by systematically varying:  
+
+- **Number of multipaths (L):** 1, 5, 10, 50, 100, 500  
+- **Number of branches (N):** 1, 2, 3, 5  
+
+All other variables (carrier frequency, velocity, sampling time, average SNR) are held constant per experiment. For each (L,N) pair, we generate independent Rayleigh-fading envelopes and compute the four key metrics below.  
+
+---  
+
+## 1. Channel‐vs‐Time (Envelope Trajectory)  
+- **Description:** Plot instantaneous fading amplitude versus time for SC and MRC.  
+- **Observation:**  
+  - SC randomly hops to whichever branch has highest SNR; deep fades still occur whenever all branches simultaneously fade.  
+  - MRC coherently weights and sums all branch signals → envelope fluctuations are “smoothed,” deep fades are mitigated.  
+- **Interpretation:** Increasing N under MRC raises diversity order ⇒ reduces fade depth and excursion frequency.  
+
+## 2. Outage Probability vs. Threshold (for N=5)  
+- **Description:** Probability { r(t) < rₜₕ } as a function of threshold level (in dB).  
+- **Observation:**  
+  - SC curve sits above MRC: at any given threshold, SC has higher outage probability.  
+  - MRC curve shifts left: significantly lower outage for same threshold.  
+- **Interpretation:** MRC’s coherent combining yields a higher mean envelope and lower tail probability, improving link availability.  
+
+## 3. Level‐Crossing Rate (LCR) vs. Threshold  
+- **Description:** Expected crossings per second of the envelope through threshold rₜₕ.  
+- **Observation:**  
+  - SC exhibits higher LCR (more rapid up‐and‐down excursions).  
+  - MRC LCR is lower—signal stays above or below threshold longer, excursion frequency is reduced.  
+- **Interpretation:** MRC increases the effective fade correlation time by averaging independent fades across branches.  
+
+## 4. Average Fade Duration (ADF) vs. Threshold  
+- **Description:** Mean time span that envelope remains below threshold once crossed.  
+- **Observation:**  
+  - For low thresholds, SC ADF is shorter (frequent but shallow fades).  
+  - For higher thresholds, MRC ADF becomes longer: deep fades are rarer but, once they occur, they persist longer due to coherent summation dynamics.  
+- **Interpretation:** MRC trades fade frequency for duration—rare events last longer, but overall availability is higher.  
+
+---
+
+## Input‐Parameter Impact Matrix  
+
+| **Parameter**           | **Impact on Graphs**                                                                                                                 | **Rationale**                                                                                               |
+|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| **No. of multipaths (L)** | • ↑ L ⇒ faster, deeper small-scale fading in Channel-vs-Time<br>• ↑ L ⇒ steeper outage‐probability tail<br>• ↑ L ⇒ higher LCR         | More rays ⇒ more constructive/destructive interference ⇒ quicker amplitude fluctuations (Doppler spread)  |
+| **No. of branches (N)**   | • SC: diversity order =1 always; MRC: ↑ N ⇒ envelope smoothing in Channel-vs-Time<br>• Outage‐probability curve shifts left<br>• LCR ↓, ADF ↑ | Additional branches provide diversity gain; MRC leverages all branch energy to mitigate fades               |
+| **Sampling time (Tₛ)**     | • Smaller Tₛ ⇒ channel-vs-time captures faster variations; LCR estimates more accurate                                                | Nyquist sampling: must exceed twice max Doppler frequency to resolve fades                                  |
+| **Carrier frequency (f_c)**| • Higher f_c ⇒ higher Doppler shift ⇒ faster fade rates in Channel-vs-Time & increased LCR                                            | Doppler ∝ f_c·v/c; higher carrier → time-scale of fades compresses                                        |
+| **Velocity (v)**           | • ↑ v ⇒ ↑ Doppler ⇒ faster fluctuation rate, increased LCR, reduced ADF for low thresholds                                           | Mobile speed directly scales Doppler spread and fade dynamics                                              |
+| **Threshold (rₜₕ)**        | • Shifts along x-axis of outage, LCR, ADF curves                                                                                      | Changing threshold re‐defines what constitutes an outage/fade                                               |
+| **Average SNR (ρ̄)**       | • ↑ ρ̄ ⇒ all outage‐probability curves shift downwards; LCR decreases; ADF increases at high thresholds                                | Higher mean power reduces probability of falling below any fixed threshold                                 |
+
+---
+
+**Conclusion**  
+By varying L and N while monitoring the four metrics, one clearly sees how diversity combining (especially MRC) transforms the statistical behavior of the fading envelope—trading fade frequency for depth and duration, and dramatically lowering outage probability. This structured analysis informs system-level trade-offs between complexity, diversity order, and link reliability.
