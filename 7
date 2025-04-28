@@ -1,0 +1,48 @@
+ Method: 
+Vary 
+o Number of mul paths: 1, 5, 10, 50, 100, 500 
+o Number of branches (channels): 1, 2, 3, 5 
+Other fixed parameters: 
+Graphs 
+1. Channel vs Time (SC & MRC) 
+o Shows fading amplitude over me for: 
+ SC (Selec on Combining) 
+ MRC (Maximal Ra o Combining) 
+o Nature: 
+Fast random varia ons around an average value. More branches (MRC) smooth out 
+deep fades. 
+2. Probability vs Threshold (M=5) 
+o Shows the probability that signal falls below a threshold. 
+o Nature: 
+ SC: Higher probability of being below threshold. 
+ MRC: Lower probability → be er performance. 
+3. LCR vs Threshold (Level Crossing Rate) 
+o How o en the signal crosses a threshold. 
+o Nature: 
+ SC: Higher LCR → more rapid fading. 
+ MRC: Lower LCR → more stable signal. 
+4. ADF vs Threshold (Average Fade Dura on) 
+o How long the signal stays below a threshold during fades. 
+o Nature: 
+ SC: Shorter ADF. 
+ MRC: Longer ADF at higher thresholds because deep fades are rarer but last 
+longer. 
+Which Input Parameters Affect the Graphs and Why 
+Input Parameter 
+No. of Mul paths 
+No. of Branches 
+(Channels) 
+Sampling Time 
+Reason 
+More mul paths → more construc ve and destruc ve interference → 
+faster, deeper fading. 
+More branches → be er diversity → less probability of deep fades 
+(improves MRC). 
+Smaller sampling me → captures faster varia ons accurately. 
+Carrier Frequency (fc) Higher fc → faster Doppler shi s → quicker channel varia ons. 
+Velocity (Speed) 
+Threshold (dB) 
+Avg SNR (dB) 
+Higher speed → faster fading → more frequent level crossings (higher LCR). 
+Changing threshold changes how o en signal falls below it. 
+Higher SNR → generally lower probability of falling below thresholds.
